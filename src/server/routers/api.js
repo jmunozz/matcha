@@ -1,21 +1,13 @@
-import express from 'express';
-import bodyParser from 'body-parser';
+import graphqlHTTP from 'express-graphql';
 
-import errors from '../middlewares/errors';
-import logRequests from '../middlewares/logRequests';
+import schema from '../schemas/api';
+import resolvers from '../resolvers/api';
 
-// Create router
-const router = express.Router();
-
-
-// Middlewares
-router.use(logRequests);
-router.use(bodyParser.json());
-
-// Routes
-// Write all routes here
-
-// Errors
-router.use(errors);
+// Create new graphQL router for API.
+const router = graphqlHTTP({
+  schema,
+  rootValue: resolvers,
+  graphiql: true,
+});
 
 export default router;
